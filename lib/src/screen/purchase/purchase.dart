@@ -2,12 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:housepital/src/constants/colors.dart';
+import 'package:housepital/src/constants/constants.dart';
 import 'package:housepital/src/constants/styles.dart';
 import 'package:housepital/src/constants/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:housepital/src/layout/layout.dart';
+import 'package:housepital/src/utils/service_request.dart';
 import 'package:housepital/src/widget/appbar.dart';
 import 'package:housepital/src/widget/drawer.dart';
+import 'package:housepital/src/widget/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Purchase extends StatefulWidget {
   @override
@@ -15,10 +20,55 @@ class Purchase extends StatefulWidget {
 }
 
 class _PurchaseState extends State<Purchase> {
-  num _stackToView = 2;
-  InAppWebViewController webView;
-  double progress = 0;
-  int progressbar=0;
+  List<dynamic> homeData ;
+  bool progress = false ;
+  String data_global ;
+  final GlobalKey _scaffoldKey = new GlobalKey();
+  
+  actionButton() async {
+    final prefs = await SharedPreferences.getInstance();
+    print('globle: ${prefs.getString('data_global')}');
+    setState(() {
+      data_global = prefs.getString('data_global');
+      //data_global='aGIzUWp1OWQ3QkNYckdDRkpwZk5hZlZncXdKL0J1K0Y2aFN2TVRSKzlpYWg4NEQyMHU3LzZ3NWxreldtMTVnNg==';
+   
+    });
+     await ServiceRequest.call(
+      url: '${finalUrl}cart',
+      //url: 'http://incontactadmin.co.uk/mobile/registration',
+      method: HttpMethods.POST,
+      requestBody: {'data_global': data_global},
+      successCallback: success,
+      failureCallback: failure
+    );
+
+  }
+
+  void success(res) async{
+    if(res['code']=='101'){
+      var _duration = new Duration(seconds: 2);
+      //showToast('${res['message']}',context) ;
+      setState(() {
+        homeData = res['result'];
+        progress=false ;
+      });
+      
+    }
+    else {
+      showToast('${res['message']}',context) ;
+    }
+  }
+
+  failure(e) {
+      /// handle any error if user stuck in this
+      /// user doesn't get effected by this call;
+      print('Error on force update: $e');
+    }
+  @override
+  void initState() {
+    super.initState();
+    actionButton();
+  }
       
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -53,7 +103,7 @@ class _PurchaseState extends State<Purchase> {
           ),
         ),
         drawer: AppDrawer(),
-        body: layout()
+        body: LayoutPage(homeData)
       ),
     );
   }

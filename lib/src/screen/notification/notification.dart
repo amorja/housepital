@@ -6,6 +6,7 @@ import 'package:housepital/src/constants/colors.dart';
 import 'package:housepital/src/constants/constants.dart';
 import 'package:housepital/src/constants/styles.dart';
 import 'package:housepital/src/constants/urls.dart';
+import 'package:housepital/src/layout/layout.dart';
 import 'package:housepital/src/routes/route_const.dart';
 import 'package:housepital/src/screen/home/webViewPage.dart';
 import 'package:housepital/src/utils/service_request.dart';
@@ -72,7 +73,7 @@ class _NotificationPageState extends State<NotificationPage> with WidgetsBinding
   @override
   void initState() {
     super.initState();
-    //actionButton();
+    actionButton();
   }
 
   Future<bool> _onWillPop() async {
@@ -109,7 +110,7 @@ class _NotificationPageState extends State<NotificationPage> with WidgetsBinding
           ),
         ),
         drawer: AppDrawer(),
-        body: layout(),
+        body: LayoutPage(homeData),
         
         // Center(
         //   child: progress ? Container(
