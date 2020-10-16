@@ -26,7 +26,7 @@ class App extends StatelessWidget {
         ),
         onGenerateRoute: route.generateRoute,
         initialRoute: splash,
-        //home: Category(),
+        //home: page_detail(),
         //home: DispatchPlan(),
         //home: Screens({"screenid":0}),
       //),

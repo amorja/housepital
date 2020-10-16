@@ -12,6 +12,8 @@ const String category = 'category';
 const String SaveResource = 'savedresource';
 const String Help = 'help';
 const String detailedPage='view_data';
-const String activeServicePage='active_service_page';
-const String pageExtanded='page_detail';
 
+const String activeServicePage='active_service_page';
+//const String pageExtanded='page_detail';
+
+const String pageExtanded='purchase_data';

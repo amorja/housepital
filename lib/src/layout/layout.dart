@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:housepital/src/constants/colors.dart';
 import 'package:housepital/src/constants/styles.dart';
 import 'package:housepital/src/screen/home/webViewPage.dart';
+import 'package:housepital/src/screen/home/home_detail.dart';
 
 class LayoutPage extends StatefulWidget {
   List layout ;
@@ -12,41 +13,47 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
-
+  var layoutcode=0;
   Widget layoutContainer(width,imagename,title,imagefit){
     
     return Container(
-      color: greyBackgroundColor,
+     // color: greyBackgroundColor,
       width: MediaQuery.of(context).size.width/width,
       child: Column(
         children: <Widget>[
           Container(
-            height: 140.0,
+            height: 120.0,
             child: ClipRRect(
-              child: Image.network(imagename,fit: imagefit== 'fill' ? BoxFit.fill : BoxFit.cover,width: MediaQuery.of(context).size.width
+              child: Image.network(imagename,fit: imagefit== 'fill' ? BoxFit.fill : BoxFit.fitWidth,width: MediaQuery.of(context).size.width/width
               ,),
             ),
           ),
           SizedBox(height:6.0),
-          SizedBox(height:40.0,child: Center(child: Text(title ,style: Styles.blackTextwithf18,))),
+          SizedBox(height:20.0,child: Center(child: Text(title ,style: Styles.blackTextwithf12,))),
           SizedBox(height:6.0),
         ],
       ),
     );
   }
+//40.0
+
+
+
+
   _firstlayout(data){
+
     if(data['layout_code']=="1"){
       if(data['title']==""){
         return new Container(
           child: new SizedBox(
-            height: 10.0,
+            height: 2.0,
           ),
         );
       } else{
       return Container(
-          margin: EdgeInsets.only(top: 0.0,bottom: 0.0),
+          margin: EdgeInsets.only(left: 6.0, top: 6.0,bottom: 0.0),
           child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(2.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,19 +65,19 @@ class _LayoutPageState extends State<LayoutPage> {
       );
       }
     }
-    // else if(data['layout_code']=="40"){
-    //   return Container(
-    //     padding: EdgeInsets.all(6.0),
-    //     margin: EdgeInsets.only(top:8.0,left: 8.0,right:8.0,bottom: 2.0),
-    //     child: new Divider(
-    //       height:2.0,
-    //       color: Colors.black,
-    //     ),
-    //   );
-    // }
+    else if(data['layout_code']=="40"){
+      return Container(
+        padding: EdgeInsets.all(1.0),
+        margin: EdgeInsets.only(top:1.0,left: 8.0,right:8.0,bottom: 1.0),
+        child: new Divider(
+          height:2.0,
+          color: Colors.black,
+        ),
+      );
+    }
     else if(data['layout_code']=="43"){
       return Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(4.0),
         child: GestureDetector(
           onTap: (){
             Navigator.pushNamed(context, data['next_page']['page_code'],arguments: {'data_heading': data['next_page']['data_heading'],'data_self': data['next_page']['data_self'],'data_url': data['next_page']['data_url']});
@@ -78,20 +85,43 @@ class _LayoutPageState extends State<LayoutPage> {
           child: layoutContainer(2,data['image'],data['title'],'contain')),
       );
     }
+
     else if(data['layout_code']=="42"){
-      return Align(
-        alignment: Alignment.topLeft,
-        child: Container(
-          width: MediaQuery.of(context).size.width/2,
-          padding: EdgeInsets.all(16.0),
-          child: GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, data['next_page']['page_code'],arguments: {'data_heading': data['next_page']['data_heading'],'data_self': data['next_page']['data_self'],'data_url': data['next_page']['data_url']});
-          },
-            child: layoutContainer(2,data['image'],data['title'],'contain')),
-        ),
-      );
+    
+    
+      layoutcode ++;
+   
+       return Align(
+         alignment: layoutcode%2==0 ? Alignment.topRight : Alignment.topLeft,
+         child: Container(
+             
+              width: MediaQuery.of(context).size.width/2.2,
+               padding: EdgeInsets.all(4.0),
+               margin: EdgeInsets.only(top:0.0,left: 8.0,right:8.0,bottom: 0.0),
+               child: GestureDetector(
+               onTap: (){
+
+               
+                 Navigator.pushNamed(context, data['next_page']['page_code']
+                 ,arguments: {'data_heading': data['next_page']['data_heading']
+                 ,'data_self': data['next_page']['data_self'],'data_url': data['next_page']['data_url']});
+              
+               },
+                         // child: Row(
+                         //   children: <Widget>[
+               child:  layoutContainer(2,data['image'],data['title'],'contain'),
+                       //     ], 
+                       // ),
+                      ),
+                                  ),
+       );
+    
+     
+       
     }
+
+
+
     else if(data['layout_code']=="2"){
       if(data['image']==""){
         return new Container(
@@ -99,7 +129,12 @@ class _LayoutPageState extends State<LayoutPage> {
             height: 15.0,
           ),
         );
-      }else{
+
+      }
+      
+      
+      
+      else{
       
       return InkWell(
         onTap: (){
@@ -322,6 +357,13 @@ class _LayoutPageState extends State<LayoutPage> {
     //return Text(data['layout_code'], style: TextStyle(color: Colors.deepPurple));
   }
 
+
+
+
+
+
+  
+
    _listhrdata(datael){
      String colorbg = datael['element_bg_color'].replaceAll('#', '0xff');
      String colorfont = datael['element_text_color'].replaceAll('#', '0xff');
@@ -336,6 +378,12 @@ class _LayoutPageState extends State<LayoutPage> {
     );
       //return myList;
   }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return new ListView.builder(
@@ -345,4 +393,8 @@ class _LayoutPageState extends State<LayoutPage> {
       },
     ) ;
   }
+
+
+
+
 }

@@ -35,7 +35,7 @@ class _HistoryState extends State<History> {
    
     });
      await ServiceRequest.call(
-      url: '${finalUrl}history',
+      url: '${finalUrl}home_inner',
       //url: 'http://incontactadmin.co.uk/mobile/registration',
       method: HttpMethods.POST,
       requestBody: {'data_global': data_global},
@@ -99,11 +99,11 @@ class _HistoryState extends State<History> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(65.0),
           child: AppBar(
-            backgroundColor: primaryBtnColor,
-            title: Text('History',style: Styles.whiteTextwithf20w6,),
+            // backgroundColor: primaryBtnColor,
+            // title: Text('History',style: Styles.whiteTextwithf20w6,),
           ),
         ),
-        drawer: AppDrawer(),
+        //drawer: AppDrawer(),
         //point1
         body: LayoutPage(homeData)
        //body: layout()
@@ -111,41 +111,19 @@ class _HistoryState extends State<History> {
     );
   }
 
-  Widget layout(){
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 16.0),
-        child: Column(
-          children: <Widget>[
-            container1('lib/assets/images/payment.jpg','Payment History'),
-            SizedBox(height:8.0),
-            container1('lib/assets/images/order.jpg','Order History'),
-          ],
-        ),
-      ),
-    );
-  }
-  Widget container1(image,title){
-    return Stack(
-      children: <Widget>[
-        Material(
-          elevation: 8.0,
-          shadowColor: black100,
-          child: ClipRRect(
-            child: Image.asset(image),
-          ),
-        ),
-        Positioned(
-          bottom: 0.0,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 60.0,
-            decoration: BoxDecoration(
-              color: black50
-            ),
-            child: Center(child: Text(title,style: Styles.whiteTextwithf20w6,)),
-          ))
-      ],
-    );
-  }
+  // Widget layout(){
+  //   return SingleChildScrollView(
+  //     child: Container(
+  //       padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 16.0),
+  //       child: Column(
+  //         children: <Widget>[
+  //           container1('lib/assets/images/payment.jpg','Payment History'),
+  //           SizedBox(height:8.0),
+  //           container1('lib/assets/images/order.jpg','Order History'),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  
 }

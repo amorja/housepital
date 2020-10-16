@@ -1,5 +1,6 @@
 
 import 'package:housepital/src/screen/home/Home.dart';
+
 import 'package:housepital/src/screen/home/home_detail.dart';
 import 'package:housepital/src/screen/home/notification.dart';
 import 'package:housepital/src/screen/home/page_detail.dart';
@@ -28,6 +29,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => Home());
     case detailedPage:
       return MaterialPageRoute(builder: (context) => DetailedPage(settings.arguments));
+
+     
     case activeServicePage :
       return MaterialPageRoute(builder: (context) => ActiveService(settings.arguments));
     case pageExtanded:
